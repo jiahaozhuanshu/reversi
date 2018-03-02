@@ -1,0 +1,27 @@
+**Project 1A - Othello**
+We intend to implement the popular abstract strategy board game Othello.
+
+Othello is a 2-player turn based game consisting of a 8x8 board. The users are supplied with chips colored black on one side and white on the other. At the start of the game a user has to chose which volor chip they will use during the game which cannot be changed afterwards.
+
+Playing the Game:
+The battle to win between the players is decided by the maximum number of pieces of one of the player on the board. The game is said to be finished when there is no more soace left on the board for a player to put a piece ot when no legal move is possible.
+
+Game-Start:
+> Both the players begin the game with two pieces on the board in the four centre squares.
+> No two matching colors are connected vertically or horizontally, making a miniature chequered pattern.
+> Traditionaly, the player who selected black chip must take the first move. 
+
+Game-Play:
+Both players take turns to make their move, which consists of placing one piece down in a legally acceptable position and then turning any of the opposite player's pieces where applicable. The player with most number of chips win the game.
+
+A detailed descripton can be found here(https://en.wikipedia.org/wiki/Reversi)
+
+Game-Interface:
+> The home page will allow user to join the lobby as a player or spectator.
+> A game instance will have a maximum of two players and ulimited number of spectators.
+> If more than two players try to join the same game they will be redirected to a new instance or will be made to spectators of this game. 
+> To join a lobby player will have to enter the name of the game he/she intends to join (which can later be changed to displaying availble game rooms).
+> The home screen of the game will display the 8 X 8 board with 2 black and 2 white chips at the center as mentioned above.
+> Players will be randomly assigned black/white chips and the player with black chip will make the first move and game will continue. 
+
+	* If a player leaves the game at any instance the game will be paused for sometime or the other player will be declared winner and if both the players leave the game then they can join it again at later time.
