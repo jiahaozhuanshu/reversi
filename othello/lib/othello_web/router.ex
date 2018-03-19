@@ -19,6 +19,7 @@ defmodule OthelloWeb.Router do
     get "/", PageController, :index
     get "/game/:game", PageController, :game
     resources "/users", UserController
+    resources "/game", GamesController
 
   end
 

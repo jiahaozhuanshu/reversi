@@ -1,0 +1,26 @@
+<h2>Listing Game</h2>
+
+<table class="table">
+  <thead>
+    <tr>
+      <th>Is over</th>
+
+      <th></th>
+    </tr>
+  </thead>
+  <tbody>
+<%= for games <- @game do %>
+    <tr>
+      <td><%= games.is_over %></td>
+
+      <td class="text-right">
+        <span><%= link "Show", to: games_path(@conn, :show, games), class: "btn btn-default btn-xs" %></span>
+        <span><%= link "Edit", to: games_path(@conn, :edit, games), class: "btn btn-default btn-xs" %></span>
+        <span><%= link "Delete", to: games_path(@conn, :delete, games), method: :delete, data: [confirm: "Are you sure?"], class: "btn btn-danger btn-xs" %></span>
+      </td>
+    </tr>
+<% end %>
+  </tbody>
+</table>
+
+<span><%= link "New Games", to: games_path(@conn, :new) %></span>
