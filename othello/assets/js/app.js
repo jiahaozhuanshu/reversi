@@ -11,7 +11,18 @@
 //
 // If you no longer want to use a dependency, remember
 // to also remove its path from "config.paths.watched".
-import "phoenix_html"
+import socket from "./socket"
+import start_othello from "./othello"
+
+function start() {
+  let root = document.getElementById('root');
+  if (root) {
+    let channel = socket.channel("games:" + window.gameName, {});
+    run_othello(root, channel);
+  }
+}
+
+$(start);
 
 // Import local files
 //
