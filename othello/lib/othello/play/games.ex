@@ -2,11 +2,12 @@ defmodule Othello.Play.Games do
   use Ecto.Schema
   import Ecto.Changeset
 
+  alias Othello.Accounts.User
 
   schema "game" do
     field :is_over, :boolean, default: false
-    field :player1_id, User
-    field :player2_id, User
+    belongs_to :player1_id, User
+    belongs_to :player2_id, User
 
     timestamps()
   end
