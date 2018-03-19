@@ -5,8 +5,8 @@ defmodule Othello.Play.Games do
 
   schema "game" do
     field :is_over, :boolean, default: false
-    field :player1_id, :id
-    field :player2_id, :id
+    field :player1_id, User
+    field :player2_id, User
 
     timestamps()
   end
@@ -14,7 +14,7 @@ defmodule Othello.Play.Games do
   @doc false
   def changeset(games, attrs) do
     games
-    |> cast(attrs, [:is_over])
-    |> validate_required([:is_over])
+    |> cast(attrs, [:is_over, :player_one_d, :player_two_id])
+    |> validate_required([:is_over, :player_one_id])          #Only 1 player is required to start a game
   end
 end
