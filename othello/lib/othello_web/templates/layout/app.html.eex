@@ -13,6 +13,15 @@
 
   <body>
     <div class="container">
+          <nav class="navbar navbar-toggleable-md navbar-light bg-faded">
+        <%= if @current_user do %>
+          <%= link "Home", to: page_path(@conn, :game), class: "nav-item nav-link" %>
+          <%= link "My Account", to: user_path(@conn, :edit, @current_user.id), class: "nav-item nav-link" %>
+          <%= link "Users", to: user_path(@conn, :index), class: "nav-item nav-link" %>
+          <%= link "Log Out", to: "/session", method: :delete, class: "nav-item nav-link" %>
+          <%= @current_user.name %>
+        <% end %>
+      </nav>
 
       <%= if get_flash(@conn, :info) do %>
       <p class="alert alert-info" role="alert"><%= get_flash(@conn, :info) %></p>
