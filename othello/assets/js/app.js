@@ -16,7 +16,9 @@ import start_othello from "./othello"
 
 function start() {
   let root = document.getElementById('root');
-  if (root) {
+  
+  if (root)
+  {
     let channel = socket.channel("games:" + window.gameName, {});
     run_othello(root, channel);
   }

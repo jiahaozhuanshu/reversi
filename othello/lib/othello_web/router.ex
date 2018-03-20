@@ -32,9 +32,10 @@ defmodule OthelloWeb.Router do
     pipe_through :browser # Use the default browser stack
 
     get "/", PageController, :index
+    get "/home", PageController, :home
     get "/game/:game", PageController, :game
+    resources "/games", GameController
     resources "/users", UserController
-    resources "/game", GamesController
     post "/session", SessionController, :create
     delete "/session", SessionController, :delete
 

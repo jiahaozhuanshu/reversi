@@ -6,7 +6,7 @@ defmodule Othello.Play do
   import Ecto.Query, warn: false
   alias Othello.Repo
 
-  alias Othello.Play.Games
+  alias Othello.Play.Game
 
   @doc """
   Returns the list of game.
@@ -14,91 +14,91 @@ defmodule Othello.Play do
   ## Examples
 
       iex> list_game()
-      [%Games{}, ...]
+      [%Game{}, ...]
 
   """
   def list_game do
-    Repo.all(Games)
+    Repo.all(Game)
   end
 
   @doc """
-  Gets a single games.
+  Gets a single game.
 
-  Raises `Ecto.NoResultsError` if the Games does not exist.
+  Raises `Ecto.NoResultsError` if the Game does not exist.
 
   ## Examples
 
-      iex> get_games!(123)
-      %Games{}
+      iex> get_game!(123)
+      %Game{}
 
-      iex> get_games!(456)
+      iex> get_game!(456)
       ** (Ecto.NoResultsError)
 
   """
-  def get_games!(id), do: Repo.get!(Games, id)
+  def get_game!(id), do: Repo.get!(Game, id)
 
   @doc """
-  Creates a games.
+  Creates a game.
 
   ## Examples
 
-      iex> create_games(%{field: value})
-      {:ok, %Games{}}
+      iex> create_game(%{field: value})
+      {:ok, %Game{}}
 
-      iex> create_games(%{field: bad_value})
+      iex> create_game(%{field: bad_value})
       {:error, %Ecto.Changeset{}}
 
   """
-  def create_games(attrs \\ %{}) do
-    %Games{}
-    |> Games.changeset(attrs)
+  def create_game(attrs \\ %{}) do
+    %Game{}
+    |> Game.changeset(attrs)
     |> Repo.insert()
   end
 
   @doc """
-  Updates a games.
+  Updates a game.
 
   ## Examples
 
-      iex> update_games(games, %{field: new_value})
-      {:ok, %Games{}}
+      iex> update_game(game, %{field: new_value})
+      {:ok, %Game{}}
 
-      iex> update_games(games, %{field: bad_value})
+      iex> update_game(game, %{field: bad_value})
       {:error, %Ecto.Changeset{}}
 
   """
-  def update_games(%Games{} = games, attrs) do
-    games
-    |> Games.changeset(attrs)
+  def update_game(%Game{} = game, attrs) do
+    game
+    |> Game.changeset(attrs)
     |> Repo.update()
   end
 
   @doc """
-  Deletes a Games.
+  Deletes a Game.
 
   ## Examples
 
-      iex> delete_games(games)
-      {:ok, %Games{}}
+      iex> delete_game(game)
+      {:ok, %Game{}}
 
-      iex> delete_games(games)
+      iex> delete_game(game)
       {:error, %Ecto.Changeset{}}
 
   """
-  def delete_games(%Games{} = games) do
-    Repo.delete(games)
+  def delete_game(%Game{} = game) do
+    Repo.delete(game)
   end
 
   @doc """
-  Returns an `%Ecto.Changeset{}` for tracking games changes.
+  Returns an `%Ecto.Changeset{}` for tracking game changes.
 
   ## Examples
 
-      iex> change_games(games)
-      %Ecto.Changeset{source: %Games{}}
+      iex> change_game(game)
+      %Ecto.Changeset{source: %Game{}}
 
   """
-  def change_games(%Games{} = games) do
-    Games.changeset(games, %{})
+  def change_game(%Game{} = game) do
+    Game.changeset(game, %{})
   end
 end
