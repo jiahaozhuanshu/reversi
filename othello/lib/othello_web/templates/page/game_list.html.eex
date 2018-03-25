@@ -1,0 +1,27 @@
+<div class="container">
+    <div class="row p-4 index-head justify-content-center">
+        <h2><b>Game List </b></h2>
+    </div>
+
+    <div class="row">
+    <%= for l <- @lobby do %>
+        <div class="card text-white bg-success mb-3" style="max-width: 18rem;">
+            <div class="card-header"><h3><b>Game:</b> <%= l %></div>
+                <div class="card-body">
+                  <div class="card-text" id="dark_block">
+                    <b>Player 1: </b><%= Map.get(Map.get(@all_games, l), :black_one) || "wait to join..." %>
+                  </div>
+                  <div class="card-text" id="light_block">
+                    <b>Player 2: </b><%= Map.get(Map.get(@all_games, l), :white_one) || "wait to join..." %>
+                  </div>
+                  <div class="card-text" id="observer">
+                  <b>Observers: </b><%= Map.get(Map.get(@all_games, l), :observers) %></div>
+                </div>
+                <%= link to: "/game/" <> l, method: :get, class: "btn btn-info join-btn" do %>
+                  Watch as a Guest
+                <% end %>
+        </div>
+    <% end %>
+    </div>
+
+</div>
