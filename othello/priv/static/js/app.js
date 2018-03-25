@@ -65906,6 +65906,14 @@ var Othello = function (_React$Component) {
         position: _reactToastify.toast.POSITION.BOTTOM_CENTER
       });
     }
+  }, {
+    key: "win_info",
+    value: function win_info(info) {
+      console.log("I was here");
+      (0, _reactToastify.toast)(info, {
+        position: _reactToastify.toast.POSITION.TOP_CENTER
+      });
+    }
 
     /**
        let's begin by rendering only a single disc for the board
@@ -66015,16 +66023,19 @@ var Othello = function (_React$Component) {
     value: function render_game_over(over) {
       if (over) {
         if (this.state.black_disc > this.state.white_disc) {
+          this.win_info("Player " + this.state.black_player + " wins the match!");
+          console.log("Call #1");
           return _react2.default.createElement(
             "div",
             { id: "congrats", className: "infoboard" },
             "Game Over!",
             _react2.default.createElement("br", null),
             this.state.black_player,
-            " wins!",
-            _react2.default.createElement(ExampleApp, null)
+            " wins!"
           );
-        } else {
+        } else if (this.state.white_disc > this.state.black_disc) {
+          this.win_info("Player " + this.state.white_player + " wins the match!");
+          console.log("Call #2");
           return _react2.default.createElement(
             "div",
             { id: "congrats" },
@@ -66032,6 +66043,16 @@ var Othello = function (_React$Component) {
             _react2.default.createElement("br", null),
             this.state.white_player,
             " wins!"
+          );
+        } else {
+          this.win_info("It's a Draw!");
+          console.log("Call #3");
+          return _react2.default.createElement(
+            "div",
+            { id: "congrats" },
+            "Game Over!",
+            _react2.default.createElement("br", null),
+            "The match ended in a draw!"
           );
         }
       } else {
@@ -66095,12 +66116,16 @@ var Othello = function (_React$Component) {
         dark_player_status = "Wait...";
         light_player_status = "Wait...";
         console.log("Here");
+      } else if (this.state.legal_moves.length == 0 || this.state.legal_moves.length == null) {
+        over = true;
+        console.log("I was here");
       } else if (this.state.player == this.state.black_player) {
         dark_player_status = "Your turn!";
         light_player_status = "Dark player's turn!";
         if (this.state.black_disc == 0 || this.state.black_disc == null) {
           over = true;
           console.log("Game over here #2");
+          this.win_info("No more turn left! Game Over!");
         }
       } else {
         dark_player_status = "White player's turn!";
@@ -66110,6 +66135,7 @@ var Othello = function (_React$Component) {
           over = true;
           console.log("Dark Pieces: " + this.state.black_disc);
           console.log("Game over here #3");
+          this.win_info("No more turn left! Game Over!");
         }
       }
 

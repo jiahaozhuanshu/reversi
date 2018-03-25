@@ -68,6 +68,14 @@ class Othello extends React.Component {
     });
   }
 
+  win_info(info)
+  {
+      console.log("I was here");
+      toast(info, {
+          position: toast.POSITION.TOP_CENTER
+      });
+  }
+
   /**
      let's begin by rendering only a single disc for the board
      */
@@ -161,15 +169,19 @@ class Othello extends React.Component {
   render_game_over(over) {
     if (over) {
       if (this.state.black_disc > this.state.white_disc) {
+        this.win_info("Player " + this.state.black_player + " wins the match!");
+        console.log("Call #1");
         return (
           <div id="congrats" className="infoboard">
             Game Over!
             <br />
             {this.state.black_player} wins!
-            <ExampleApp />
+
           </div>
         );
-      } else {
+      } else if (this.state.white_disc > this.state.black_disc) {
+        this.win_info("Player " + this.state.white_player + " wins the match!");
+        console.log("Call #2");
         return (
           <div id="congrats">
             Game Over!
@@ -177,7 +189,19 @@ class Othello extends React.Component {
             {this.state.white_player} wins!
           </div>
         );
+      }else
+      {
+          this.win_info("It's a Draw!");
+          console.log("Call #3");
+          return (
+              <div id="congrats">
+                  Game Over!
+                  <br />
+                  The match ended in a draw!
+              </div>
+          );
       }
+
     } else {
       return <div>Game in Progress!</div>;
     }
@@ -231,7 +255,11 @@ class Othello extends React.Component {
       console.log("Here");
     }
     else if (this.state.legal_moves.length == 0 || this.state.legal_moves.length == null)
+    {
         over = true;
+        console.log("I was here");
+    }
+
     else if (this.state.player == this.state.black_player)
     {
       dark_player_status = "Your turn!";
@@ -240,6 +268,7 @@ class Othello extends React.Component {
       {
         over = true;
         console.log("Game over here #2");
+        this.win_info("No more turn left! Game Over!");
       }
     }
     else
@@ -251,6 +280,7 @@ class Othello extends React.Component {
         over = true;
         console.log("Dark Pieces: " + this.state.black_disc);
         console.log("Game over here #3");
+        this.win_info("No more turn left! Game Over!");
       }
     }
 
