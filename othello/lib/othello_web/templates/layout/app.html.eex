@@ -31,13 +31,10 @@
             <a class="nav-link" href="/game_list">View all Games</a>
           </li>
           <li class="nav-item">
-            <a class="nav-link" href="#">View your games</a>
+            <a class="nav-link" href="/player_list">Player list</a>
           </li>
           <li class="nav-item">
             <a class="nav-link" href="#">Scoreboard</a>
-          </li>
-          <li class="nav-item">
-            <a class="nav-link" href="#">Player list</a>
           </li>
         </ul>
       </div>

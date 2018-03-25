@@ -1,0 +1,40 @@
+<div class="container">
+    <div class="row p-4 index-head justify-content-center">
+        <h2><b>Player List </b></h2>
+    </div>
+
+    <div class="row p-4">
+    <%= for l <- @lobby do %>
+        <%= if Map.get(Map.get(@all_games, l), :black_player) do %>
+        <div class="card text-white bg-danger mb-3" style="max-width: 18rem;">
+            <div class="card-header">
+                <h3><b>Player:</b> <%= Map.get(Map.get(@all_games, l), :black_player)%>
+            </div>
+            <div class="card-body">
+                <div class="card-text" id="dark_block">
+                    <b>Player's game: </b><%= l %>
+                </div>
+            </div>
+        </div>
+        <% end %>
+    <% end %>
+    </div>
+
+    <div class="row p-4">
+        <%= for l <- @lobby do %>
+            <%= if Map.get(Map.get(@all_games, l), :white_player) do %>
+            <div class="card text-white bg-danger mb-3" style="max-width: 18rem;">
+                <div class="card-header">
+                    <h3><b>Player:</b> <%= Map.get(Map.get(@all_games, l), :white_player) %>
+                </div>
+                <div class="card-body">
+                    <div class="card-text" id="dark_block">
+                        <b>Player's game: </b><%= l %>
+                    </div>
+                </div>
+            </div>
+            <% end %>
+        <% end %>
+        </div>
+
+</div>

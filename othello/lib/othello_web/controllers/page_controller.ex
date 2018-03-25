@@ -16,4 +16,8 @@ defmodule OthelloWeb.PageController do
   def game_list(conn, _params) do
     render conn, "game_list.html", lobby: GameBackUp.game_lobby, all_games: GameBackUp.all_games
   end
+
+  def player_list(conn, _params) do
+    render conn, "player_list.html", lobby: GameBackUp.game_lobby, all_games: GameBackUp.all_games
+  end
 end
