@@ -229,14 +229,21 @@ class Othello extends React.Component {
       dark_player_status = "Wait...";
       light_player_status = "Wait...";
       console.log("Here");
-    } else if (this.state.player == this.state.black_player) {
+    }
+    else if (this.state.legal_moves.length == 0 || this.state.legal_moves.length == null)
+        over = true;
+    else if (this.state.player == this.state.black_player)
+    {
       dark_player_status = "Your turn!";
       light_player_status = "Dark player's turn!";
-      if (this.state.black_disc == 0 || this.state.black_disc == null) {
+      if (this.state.black_disc == 0 || this.state.black_disc == null)
+      {
         over = true;
         console.log("Game over here #2");
       }
-    } else {
+    }
+    else
+    {
       dark_player_status = "White player's turn!";
       light_player_status = "Your turn!";
 
