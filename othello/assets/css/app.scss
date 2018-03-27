@@ -275,6 +275,7 @@ a.animated-button:link, a.animated-button:visited {
   height: 420px;
   border: 1px solid #f2f2f5;
   padding: 0px;
+  overflow-y: scroll; 
 }
 #words {
   width: 195%;
