@@ -30,4 +30,11 @@ function start() {
   }
 }
 
+
+
+window.setInterval(function() {
+    var elem = document.getElementById('chatRoomBody');
+    elem.scrollTop = elem.scrollHeight;
+}, 50);
+
 $(start);

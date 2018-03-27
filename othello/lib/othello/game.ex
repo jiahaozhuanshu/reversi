@@ -69,8 +69,21 @@ defmodule Othello.Game do
           Enum.member?(game.observers, user_name) ->
         game
 
+        String.length(user_name) == 0 ->
+               game
+               |> Map.put(
+                 :chats,
+                 List.insert_at(chats, -1, [
+                   "system",
+                   "" <>
+                     user_name <> " joined the game as an observer and can only see the game in play."
+                 ])
+               )
+               |> Map.put(:observers, List.insert_at(game.observers, -1, user_name))
+
+
       game.black_player == nil or game.white_player == nil ->
-        if game.white_player == nil  do
+        if game.white_player == nil do
           game
           |> Map.put(
             :chats,
@@ -81,33 +94,30 @@ defmodule Othello.Game do
           )
           |> Map.put(:white_player, user_name)
         else
-          if String.length(user_name) == 0 do
-            game
-            |> Map.put(
-              :chats,
-              List.insert_at(chats, -1, [
-                "system",
-                "" <>
-                  user_name <> " joined the game as an observer and can only see the game in play."
-              ])
-            )
-            |> Map.put(:observers, List.insert_at(game.observers, -1, user_name))
-
-          else
-            user_name != nil
-            game
-            |> Map.put(
-              :chats,
-              List.insert_at(chats, -1, [
-                "system",
-                "" <> user_name <> " joined the game and will be playing with the black discs."
-              ])
-            )
-            |> Map.put(:black_player, user_name)
-            |> Map.put(:player, user_name)
-            |> Map.put(:status, "Playing")
-          end          
+          game
+          |> Map.put(
+            :chats,
+            List.insert_at(chats, -1, [
+              "system",
+              "" <> user_name <> " joined the game and will be playing with the black discs."
+            ])
+          )
+          |> Map.put(:black_player, user_name)
+          |> Map.put(:player, user_name)
+          |> Map.put(:status, "Playing")
         end
+
+      true ->
+        game
+        |> Map.put(
+          :chats,
+          List.insert_at(chats, -1, [
+            "system",
+            "" <>
+              user_name <> " joined the game as an observer and can only see the game in play."
+          ])
+        )
+        |> Map.put(:observers, List.insert_at(game.observers, -1, user_name))
     end
   end
 
