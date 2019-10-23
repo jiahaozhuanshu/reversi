@@ -20,8 +20,8 @@ body
   //background: linear-gradient(left, rgba(233,223,196,1) 0%,rgba(233,223,196,1) 1%,rgba(237,227,200,1) 2%,rgba(237,227,200,1) 24%,rgba(235,221,195,1) 25%,rgba(233,223,196,1) 48%,rgba(235,221,195,1) 49%,rgba(230,216,189,1) 52%,rgba(230,216,189,1) 53%,rgba(233,219,192,1) 54%,rgba(230,216,189,1) 55%,rgba(230,216,189,1) 56%,rgba(233,219,192,1) 57%,rgba(230,216,189,1) 58%,rgba(230,216,189,1) 73%,rgba(233,219,192,1) 74%,rgba(233,219,192,1) 98%,rgba(235,221,195,1) 100%);
   //background-size: 120px;
   //background-repeat: repeat;
-  background-color: #000000;
-  background-image: url("/images/shattered-dark.png");
+  background-color: white;
+  
 }
 
 
@@ -63,7 +63,7 @@ body
 }
 
 .enabled-disk {
-  background-color: forestgreen;
+  background-color: green;
   width: 60px;
   height: 60px;
   border: 1px solid black;
@@ -72,9 +72,8 @@ body
 
 .enabled-disk:hover
 {
-  background-color: gray;
+  background-color:rgb(56,54,54);
   border-radius: 100%;
-  border: 3px solid forestgreen;
   height: 90%;
   width: 90%;
   position: absolute;
@@ -250,9 +249,10 @@ a.animated-button:link, a.animated-button:visited {
 }
 .index-head
 {
-  color: white;
+  color: blue;
   font-weight: bold;
   text-align: center;
+  font-size: 30px;
 }
 
 .games-list

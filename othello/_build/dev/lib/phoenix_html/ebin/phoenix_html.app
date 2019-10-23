@@ -1,5 +1,6 @@
 {application,phoenix_html,
-    [{description,
+    [{applications,[kernel,stdlib,elixir,logger,plug]},
+     {description,
          "Phoenix.HTML functions for working with HTML strings and templates"},
      {modules,
          ['Elixir.Phoenix.HTML','Elixir.Phoenix.HTML.Engine',
@@ -16,7 +17,6 @@
           'Elixir.Phoenix.HTML.Tag']},
      {registered,[]},
      {vsn,"2.10.5"},
-     {applications,[kernel,stdlib,elixir,logger,plug]},
      {env,
          [{csrf_token_generator,
               {'Elixir.Plug.CSRFProtection',get_csrf_token,[]}}]}]}.

@@ -6031,8 +6031,7 @@ body {
   font-family: "Arial Black", "Arial Bold", Gadget, sans-serif;
   height: 100%;
   width: 100%;
-  background-color: #000000;
-  background-image: url("/images/shattered-dark.png"); }
+  background-color: white; }
 
 #observer {
   color: black;
@@ -6066,15 +6065,14 @@ body {
   padding-top: 5%; }
 
 .enabled-disk {
-  background-color: forestgreen;
+  background-color: green;
   width: 60px;
   height: 60px;
   border: 1px solid black; }
 
 .enabled-disk:hover {
-  background-color: gray;
+  background-color: #383636;
   border-radius: 100%;
-  border: 3px solid forestgreen;
   height: 90%;
   width: 90%;
   position: absolute;
@@ -6219,9 +6217,10 @@ a.animated-button:link, a.animated-button:visited {
   transition: all 1s ease; }
 
 .index-head {
-  color: white;
+  color: blue;
   font-weight: bold;
-  text-align: center; }
+  text-align: center;
+  font-size: 30px; }
 
 .games-list {
   color: white;

@@ -65799,6 +65799,11 @@ function start() {
 // to also remove its path from "config.paths.watched".
 
 
+window.setInterval(function () {
+  var elem = document.getElementById('chatRoomBody');
+  elem.scrollTop = elem.scrollHeight;
+}, 50);
+
 $(start);
 
 });
@@ -65898,13 +65903,6 @@ var Othello = function (_React$Component) {
       console.log("state in joining");
       console.log(view.game);
       this.setState(view.game);
-    }
-  }, {
-    key: "notify",
-    value: function notify() {
-      (0, _reactToastify.toast)("Invalid MOVE!", {
-        position: _reactToastify.toast.POSITION.BOTTOM_CENTER
-      });
     }
   }, {
     key: "win_info",
@@ -66120,8 +66118,7 @@ var Othello = function (_React$Component) {
         over = true;
         console.log("I was here");
       } else if (this.state.player == this.state.black_player) {
-        dark_player_status = "Your turn!";
-        light_player_status = "Dark player's turn!";
+        dark_player_status = "Black player's turn!";
         if (this.state.black_disc == 0 || this.state.black_disc == null) {
           over = true;
           console.log("Game over here #2");
@@ -66129,7 +66126,6 @@ var Othello = function (_React$Component) {
         }
       } else {
         dark_player_status = "White player's turn!";
-        light_player_status = "Your turn!";
 
         if (this.state.white_disc == 0 || this.state.white_disc == null) {
           over = true;
@@ -66154,23 +66150,15 @@ var Othello = function (_React$Component) {
               "div",
               { className: "col-3 scoreboard" },
               _react2.default.createElement(
-                _reactstrap.Row,
+                "div",
                 { className: "card-row" },
                 _react2.default.createElement(
-                  _reactstrap.Card,
+                  "div",
                   {
-                    body: true,
-                    inverse: true,
-                    style: { backgroundColor: "#333", borderColor: "#333" }
+                    style: { backgroundcolor: "black" }
                   },
                   _react2.default.createElement(
-                    _reactstrap.CardTitle,
-                    { className: "title" },
-                    "Player: ",
-                    this.state.black_player
-                  ),
-                  _react2.default.createElement(
-                    _reactstrap.CardText,
+                    "div",
                     null,
                     dark_player_status
                   )
@@ -66181,7 +66169,7 @@ var Othello = function (_React$Component) {
                 { className: "card-row" },
                 _react2.default.createElement(
                   _reactstrap.Card,
-                  { body: true, inverse: true, color: "danger" },
+                  { body: true, inverse: true, style: { backgroundColor: "blue" } },
                   _react2.default.createElement(
                     _reactstrap.CardTitle,
                     { className: "title1" },
@@ -66217,32 +66205,8 @@ var Othello = function (_React$Component) {
                 _reactstrap.Row,
                 { className: "card-row" },
                 _react2.default.createElement(
-                  _reactstrap.Card,
-                  { body: true, outline: true, color: "info" },
-                  _react2.default.createElement(
-                    _reactstrap.CardTitle,
-                    { className: "title" },
-                    "Player: ",
-                    this.state.white_player
-                  ),
-                  _react2.default.createElement(
-                    _reactstrap.CardText,
-                    null,
-                    light_player_status
-                  )
-                )
-              ),
-              _react2.default.createElement(
-                _reactstrap.Row,
-                { className: "card-row" },
-                _react2.default.createElement(
-                  _reactstrap.Card,
-                  { body: true, inverse: true, color: "info" },
-                  _react2.default.createElement(
-                    _reactstrap.CardTitle,
-                    { className: "title" },
-                    "Game Status"
-                  ),
+                  "div",
+                  null,
                   _react2.default.createElement(
                     _reactstrap.CardText,
                     null,

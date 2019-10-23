@@ -62,11 +62,7 @@ class Othello extends React.Component {
     console.log(view.game);
     this.setState(view.game);
   }
-  notify() {
-    toast("Invalid MOVE!", {
-      position: toast.POSITION.BOTTOM_CENTER
-    });
-  }
+ 
 
   win_info(info)
   {
@@ -262,8 +258,7 @@ class Othello extends React.Component {
 
     else if (this.state.player == this.state.black_player)
     {
-      dark_player_status = "Your turn!";
-      light_player_status = "Dark player's turn!";
+      dark_player_status = "Black player's turn!";
       if (this.state.black_disc == 0 || this.state.black_disc == null)
       {
         over = true;
@@ -274,7 +269,6 @@ class Othello extends React.Component {
     else
     {
       dark_player_status = "White player's turn!";
-      light_player_status = "Your turn!";
 
       if (this.state.white_disc == 0 || this.state.white_disc == null) {
         over = true;
@@ -291,20 +285,16 @@ class Othello extends React.Component {
         <div className="container-fluid" id="board">
           <div className="row">
             <div className="col-3 scoreboard">
-              <Row className="card-row">
-                <Card
-                  body
-                  inverse
-                  style={{ backgroundColor: "#333", borderColor: "#333" }}
+              <div className="card-row">
+                <div
+                  style={{ backgroundcolor: "black"}}
                 >
-                  <CardTitle className="title">
-                    Player: {this.state.black_player}
-                  </CardTitle>
-                  <CardText>{dark_player_status}</CardText>
-                </Card>
-              </Row>
+	    
+                  <div>{dark_player_status}</div>
+                </div>
+              </div>
               <Row className="card-row">
-                <Card body inverse color="danger">
+                <Card body inverse style= {{ backgroundColor: "blue" }}>
                   <CardTitle className="title1">Score</CardTitle>
                   <CardText>
                     <Row className="title1 card-row">
@@ -319,20 +309,14 @@ class Othello extends React.Component {
                     </Row>
                   </CardText>
                 </Card>
+		  
               </Row>
-              <Row className="card-row">
-                <Card body outline color="info">
-                  <CardTitle className="title">
-                    Player: {this.state.white_player}
-                  </CardTitle>
-                  <CardText>{light_player_status}</CardText>
-                </Card>
-              </Row>
-              <Row className="card-row">
-                <Card body inverse color="info">
-                  <CardTitle className="title">Game Status</CardTitle>
+
+		  <Row className="card-row">
+                <div>
+                
                   <CardText>{over_modal}</CardText>
-                </Card>
+                </div>
               </Row>
             </div>
 

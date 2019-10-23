@@ -19,5 +19,4 @@
                         'Elixir.OthelloWeb.UserSocket']},
               {registered,[]},
               {vsn,"0.0.1"},
-              {mod,{'Elixir.Othello.Application',[]}},
-              {extra_applications,[logger,runtime_tools]}]}.
+              {mod,{'Elixir.Othello.Application',[]}}]}.
