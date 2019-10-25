@@ -9,17 +9,6 @@ body
   font-family: "Arial Black", "Arial Bold", Gadget, sans-serif;
   height: 100%;
   width: 100%;
-  //background: #1E2327;
-  //background: rgb(233,223,196);
-  //
-  //background: -moz-linear-gradient(left, rgba(233,223,196,1) 0%, rgba(233,223,196,1) 1%, rgba(237,227,200,1) 2%, rgba(237,227,200,1) 24%, rgba(235,221,195,1) 25%, rgba(233,223,196,1) 48%, rgba(235,221,195,1) 49%, rgba(230,216,189,1) 52%, rgba(230,216,189,1) 53%, rgba(233,219,192,1) 54%, rgba(230,216,189,1) 55%, rgba(230,216,189,1) 56%, rgba(233,219,192,1) 57%, rgba(230,216,189,1) 58%, rgba(230,216,189,1) 73%, rgba(233,219,192,1) 74%, rgba(233,219,192,1) 98%, rgba(235,221,195,1) 100%);
-  //background: -webkit-gradient(linear, left top, right top, color-stop(0%,rgba(233,223,196,1)), color-stop(1%,rgba(233,223,196,1)), color-stop(2%,rgba(237,227,200,1)), color-stop(24%,rgba(237,227,200,1)), color-stop(25%,rgba(235,221,195,1)), color-stop(48%,rgba(233,223,196,1)), color-stop(49%,rgba(235,221,195,1)), color-stop(52%,rgba(230,216,189,1)), color-stop(53%,rgba(230,216,189,1)), color-stop(54%,rgba(233,219,192,1)), color-stop(55%,rgba(230,216,189,1)), color-stop(56%,rgba(230,216,189,1)), color-stop(57%,rgba(233,219,192,1)), color-stop(58%,rgba(230,216,189,1)), color-stop(73%,rgba(230,216,189,1)), color-stop(74%,rgba(233,219,192,1)), color-stop(98%,rgba(233,219,192,1)), color-stop(100%,rgba(235,221,195,1)));
-  //background: -webkit-linear-gradient(left, rgba(233,223,196,1) 0%,rgba(233,223,196,1) 1%,rgba(237,227,200,1) 2%,rgba(237,227,200,1) 24%,rgba(235,221,195,1) 25%,rgba(233,223,196,1) 48%,rgba(235,221,195,1) 49%,rgba(230,216,189,1) 52%,rgba(230,216,189,1) 53%,rgba(233,219,192,1) 54%,rgba(230,216,189,1) 55%,rgba(230,216,189,1) 56%,rgba(233,219,192,1) 57%,rgba(230,216,189,1) 58%,rgba(230,216,189,1) 73%,rgba(233,219,192,1) 74%,rgba(233,219,192,1) 98%,rgba(235,221,195,1) 100%);
-  //background: -o-linear-gradient(left, rgba(233,223,196,1) 0%,rgba(233,223,196,1) 1%,rgba(237,227,200,1) 2%,rgba(237,227,200,1) 24%,rgba(235,221,195,1) 25%,rgba(233,223,196,1) 48%,rgba(235,221,195,1) 49%,rgba(230,216,189,1) 52%,rgba(230,216,189,1) 53%,rgba(233,219,192,1) 54%,rgba(230,216,189,1) 55%,rgba(230,216,189,1) 56%,rgba(233,219,192,1) 57%,rgba(230,216,189,1) 58%,rgba(230,216,189,1) 73%,rgba(233,219,192,1) 74%,rgba(233,219,192,1) 98%,rgba(235,221,195,1) 100%);
-  //background: -ms-linear-gradient(left, rgba(233,223,196,1) 0%,rgba(233,223,196,1) 1%,rgba(237,227,200,1) 2%,rgba(237,227,200,1) 24%,rgba(235,221,195,1) 25%,rgba(233,223,196,1) 48%,rgba(235,221,195,1) 49%,rgba(230,216,189,1) 52%,rgba(230,216,189,1) 53%,rgba(233,219,192,1) 54%,rgba(230,216,189,1) 55%,rgba(230,216,189,1) 56%,rgba(233,219,192,1) 57%,rgba(230,216,189,1) 58%,rgba(230,216,189,1) 73%,rgba(233,219,192,1) 74%,rgba(233,219,192,1) 98%,rgba(235,221,195,1) 100%);
-  //background: linear-gradient(left, rgba(233,223,196,1) 0%,rgba(233,223,196,1) 1%,rgba(237,227,200,1) 2%,rgba(237,227,200,1) 24%,rgba(235,221,195,1) 25%,rgba(233,223,196,1) 48%,rgba(235,221,195,1) 49%,rgba(230,216,189,1) 52%,rgba(230,216,189,1) 53%,rgba(233,219,192,1) 54%,rgba(230,216,189,1) 55%,rgba(230,216,189,1) 56%,rgba(233,219,192,1) 57%,rgba(230,216,189,1) 58%,rgba(230,216,189,1) 73%,rgba(233,219,192,1) 74%,rgba(233,219,192,1) 98%,rgba(235,221,195,1) 100%);
-  //background-size: 120px;
-  //background-repeat: repeat;
   background-color: white;
   
 }
@@ -125,7 +114,6 @@ body
   padding-top: 2%;
 }
 
-//Score Cards
 .title
 {
   font-weight: bold;
@@ -137,104 +125,14 @@ body
   font-weight: bold;
 }
 
-.card-row
-{
-  padding: 10px;
-  font-weight: bold;
-}
 
 .gameboard
 {
-  //align-content: center;
-  padding-left: 5%;
-  //text-align: center;
-  //float:right;
-}
-
-.scoreboard
-{
   padding-left: 5%;
 }
 
-.infoboard
-{
-  color: white;
-  padding: 5%
-}
 
-// Attribute: http://cssdeck.com/labs/animated-css-buttons
-a.animated-button.victoria-two {
-	border: 2px solid #D24D57;
-}
-a.animated-button.victoria-two:after {
-	background: #D24D57;
-	-moz-transform: translateX(-50%) translateY(-50%) rotate(25deg);
-	-ms-transform: translateX(-50%) translateY(-50%) rotate(25deg);
-	-webkit-transform: translateX(-50%) translateY(-50%) rotate(25deg);
-	transform: translateX(-50%) translateY(-50%) rotate(25deg);
-}
 
-/* Global Button Styles */
-a.animated-button:link, a.animated-button:visited {
-	position: relative;
-	display: block;
-	margin: 30px auto 0;
-	padding: 14px 15px;
-	color: blue;
-	font-size:14px;
-	font-weight: bold;
-	text-align: center;
-	text-decoration: none;
-	text-transform: uppercase;
-	overflow: hidden;
-	letter-spacing: .08em;
-	border-radius: 0;
-	text-shadow: 0 0 1px rgba(0, 0, 0, 0.2), 0 1px 0 rgba(0, 0, 0, 0.2);
-	-webkit-transition: all 1s ease;
-	-moz-transition: all 1s ease;
-	-o-transition: all 1s ease;
-	transition: all 1s ease;
-}
-a.animated-button:link:after, a.animated-button:visited:after {
-	content: "";
-	position: absolute;
-	height: 0%;
-	left: 50%;
-	top: 50%;
-	width: 150%;
-	z-index: -1;
-	-webkit-transition: all 0.75s ease 0s;
-	-moz-transition: all 0.75s ease 0s;
-	-o-transition: all 0.75s ease 0s;
-	transition: all 0.75s ease 0s;
-}
-a.animated-button:link:hover, a.animated-button:visited:hover {
-	color: #FFF;
-	text-shadow: none;
-}
-a.animated-button:link:hover:after, a.animated-button:visited:hover:after {
-	height: 450%;
-}
-a.animated-button:link, a.animated-button:visited {
-	position: relative;
-	display: block;
-	margin: 30px auto 0;
-	padding: 14px 15px;
-	color: blue;
-	font-size:14px;
-	border-radius: 0;
-	font-weight: bold;
-	text-align: center;
-	text-decoration: none;
-	text-transform: uppercase;
-	overflow: hidden;
-	letter-spacing: .08em;
-	text-shadow: 0 0 1px rgba(0, 0, 0, 0.2), 0 1px 0 rgba(0, 0, 0, 0.2);
-	-webkit-transition: all 1s ease;
-	-moz-transition: all 1s ease;
-	-o-transition: all 1s ease;
-	transition: all 1s ease;
-}
 .index-head
 {
   color: blue;
@@ -246,10 +144,10 @@ a.animated-button:link, a.animated-button:visited {
 
 
 #chatRoomHeader {
-  background: red;
+  background: gold;
 	border-radius: 10px 10px 0 0;
-	color: green;
-	cursor: pointer;
+	color: black;
+	cursor: black;
 	padding: 16px 24px;
 }
 

@@ -14,7 +14,6 @@
         <ul class="list-group list-group-flush">
           <li class="list-group-item"> <a id="new_game" href="#" >New Game</a> </li>
           <li class="list-group-item"><a id="new_game2" href="#" >Join Game</a> </li>
-          <%# <li class="list-group-item"><a id="new_game3" href="#" >Spectate Game</a> </li> %>
         </ul>
       </div>
     </div>
@@ -86,7 +85,6 @@
     var modal = document.getElementById('myModal');
     var btn = document.getElementById("new_game");
     var btn2 = document.getElementById("new_game2");
-    {/*var btn3 = document.getElementById("new_game3");*/}
     var span = document.getElementsByClassName("close")[0];
 
     btn.onclick = function() {

@@ -1,43 +1,27 @@
 #!/bin/bash
 
-export PORT=5400
 export MIX_ENV=prod
-export GIT_PATH=/home/othello/src/othello
+export PORT=4899
+export NODEBIN=`pwd`/assets/node_modules/.bin
+export PATH="$PATH:$NODEBIN"
 
-PWD=`pwd`
-if [ $PWD != $GIT_PATH ]; then
-	echo "Error: Must check out git repo to $GIT_PATH"
-	echo "  Current directory is $PWD"
-	exit 1
-fi
+echo "Building..."
 
-if [ $USER != "othello" ]; then
-	echo "Error: must run as user 'othello'"
-	echo "  Current user is $USER"
-	exit 2
-fi
+mkdir -p ~/.config
+mkdir -p priv/static
 
 mix deps.get
+mix compile
 (cd assets && npm install)
-(cd assets && ./node_modules/brunch/bin/brunch b -p)
+(cd assets && webpack --mode production)
 mix phx.digest
-mix release --env=prod
 
-mkdir -p ~/www
-mkdir -p ~/old
+echo "Generating release..."
+mix release
 
-NOW=`date +%s`
-if [ -d ~/www/othello ]; then
-	echo mv ~/www/othello ~/old/$NOW
-	mv ~/www/othello ~/old/$NOW
-fi
+#echo "Stopping old copy of app, if any..."
+#_build/prod/rel/draw/bin/practice stop || true
 
-mkdir -p ~/www/othello
-REL_TAR=~/src/othello/_build/prod/rel/othello/releases/0.0.1/othello.tar.gz
-(cd ~/www/othello && tar xzvf $REL_TAR)
+echo "Starting app..."
 
-crontab - <<CRONTAB
-@reboot bash /home/othello/src/othello/start.sh
-CRONTAB
-
-#. start.sh
+#_build/prod/rel/reversi/bin/reversi start

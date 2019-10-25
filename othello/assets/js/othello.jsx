@@ -1,8 +1,7 @@
 import React from "react";
 import ReactDOM from "react-dom";
-import { Button, Row, Card, CardTitle, CardText } from "reactstrap";
 import { Circle } from "react-shapes";
-import { ToastContainer, toast } from "react-toastify";
+
 
 export default function run_othello(root, channel) {
   ReactDOM.render(<Othello channel={channel} />, root);
@@ -14,16 +13,16 @@ class Othello extends React.Component {
     this.channel = props.channel;
     this.user_name = props.channel.params.user_name;
     this.state = {
-      game_board: [], //creating a board as that similar to othello
-      black_player: "", // player playing with black discs
-      white_player: "", // player playing with white discs
-      observers: [], //  List of all the available observers for the game
-      chats: [], //List of chats that have been generated
-      player: "", // The player whose turn is to make a move
-      black_disc: 0, // number of black disc
-      white_disc: 0, // number of white disc
-      legal_moves: [], // the legal moves available for the current disc
-      game_status: "Waiting" // status of the game
+      game_board: [], 
+      black_player: "", 
+      white_player: "", 
+      observers: [], 
+      chats: [], 
+      player: "", 
+      black_disc: 0, 
+      white_disc: 0, 
+      legal_moves: [], 
+      game_status: "Waiting" 
     };
 
     this.channel.on("move", payload => {
@@ -35,20 +34,15 @@ class Othello extends React.Component {
       .join()
       .receive("ok", this.got_view.bind(this))
       .receive("error", resp => {
-        console.log("Unable to join", resp);
       });
     this.make_move = this.make_move.bind(this);
     this.start_chat = this.start_chat.bind(this);
 
     this.channel.on("join", payload => {
-      // console.log("state after joining");
-      // console.log(payload.game_state);
       this.setState(payload.game_state);
     });
 
     this.channel.on("finish", payload => {
-      // console.log("state after finishing");
-      // console.log("game finished");
       this.setState(payload.game_state);
     });
 
@@ -58,30 +52,26 @@ class Othello extends React.Component {
   }
 
   got_view(view) {
-    console.log("state in joining");
-    console.log(view.game);
     this.setState(view.game);
   }
  
 
   win_info(info)
   {
-      console.log("I was here");
       toast(info, {
           position: toast.POSITION.TOP_CENTER
       });
   }
 
-  /**
-     let's begin by rendering only a single disc for the board
-     */
+
+/**display a single tile to the board*/	
   render_disc(row, col) {
     let disk = "";
     if (this.state.game_board.length != 0) {
       let diskState = this.state.game_board[row][col];
       if (diskState == 0) {
         disk = (
-          <Button
+          <button
             className="enabled-disk"
             onClick={() => this.make_move(row, col)}
           />
@@ -104,9 +94,8 @@ class Othello extends React.Component {
     return disk;
   }
 
-  /**
-   * Rendering the game othello board
-   */
+
+/** return reversi board*/	
   render_othello() {
     let rows = [];
     for (let i = 1; i <= 8; i++) {
@@ -132,21 +121,12 @@ class Othello extends React.Component {
     return rows;
   }
 
-  /**
-   * Player moves the discs on the game board
-   */
   make_move(row, col) {
     let user_name = this.channel.params.user_name;
 
     if (this.state.player != user_name) return;
 
-    let size = this.state.game_board.length;
-    let index = row * size + col;
 
-    if (!this.state.legal_moves.includes(index)) {
-      this.notify();
-      return;
-    }
 
     let identity = -1;
 
@@ -161,7 +141,6 @@ class Othello extends React.Component {
     });
   }
 
-  /** Check if the game is over or not and rende the message if game over*/
   render_game_over(over) {
     if (over) {
       if (this.state.black_disc > this.state.white_disc) {
@@ -188,10 +167,10 @@ class Othello extends React.Component {
       {
 
           return (
-              <div id="congrats">
+              <div>
                   Game Over!
                   <br />
-                  The match ended in a draw!
+                  It is a draw!
               </div>
           );
       }
@@ -210,10 +189,10 @@ class Othello extends React.Component {
 
   render() {
     let chats = this.state.chats;
-    let mainChat = [];
+    let chatHistory = [];
 
     for (let i = 0; i < chats.length; i++) {
-      let firstChat = chats[i];
+      let curChat = chats[i];
       let chatType = firstChat[0];
       let chatInfo = firstChat[1];
       let chatTypeClass = "";
