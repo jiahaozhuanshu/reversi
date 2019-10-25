@@ -114,7 +114,7 @@ class Othello extends React.Component {
       cols.push();
       for (let j = 0; j < 8; j++) {
         cols.push(
-          <div className="col" key={"0" + j}>
+          <div className="col no-gutters" key={"0" + j}>
             {" "}
             {this.render_disc(i - 1, j)}{" "}
           </div>
@@ -165,10 +165,9 @@ class Othello extends React.Component {
   render_game_over(over) {
     if (over) {
       if (this.state.black_disc > this.state.white_disc) {
-        this.win_info("Player " + this.state.black_player + " wins the match!");
-        console.log("Call #1");
+   
         return (
-          <div id="congrats" className="infoboard">
+          <div>
             Game Over!
             <br />
             {this.state.black_player} wins!
@@ -176,10 +175,10 @@ class Othello extends React.Component {
           </div>
         );
       } else if (this.state.white_disc > this.state.black_disc) {
-        this.win_info("Player " + this.state.white_player + " wins the match!");
-        console.log("Call #2");
+        
+    
         return (
-          <div id="congrats">
+          <div>
             Game Over!
             <br />
             {this.state.white_player} wins!
@@ -187,8 +186,7 @@ class Othello extends React.Component {
         );
       }else
       {
-          this.win_info("It's a Draw!");
-          console.log("Call #3");
+
           return (
               <div id="congrats">
                   Game Over!
@@ -228,7 +226,7 @@ class Othello extends React.Component {
       }
 
       mainChat.push(
-        <div className={"row chattingMsg " + chatTypeClass} key={"msg" + i}>
+        <div className={"row" + chatTypeClass} key={"msg" + i}>
           {" "}
           {chatInfo} <br />
         </div>
@@ -284,47 +282,8 @@ class Othello extends React.Component {
       <div>
         <div className="container-fluid" id="board">
           <div className="row">
-            <div className="col-3 scoreboard">
-              <div className="card-row">
-                <div
-                  style={{ backgroundcolor: "black"}}
-                >
-	    
-                  <div>{dark_player_status}</div>
-                </div>
-              </div>
-              <Row className="card-row">
-                <Card body inverse style= {{ backgroundColor: "blue" }}>
-                  <CardTitle className="title1">Score</CardTitle>
-                  <CardText>
-                    <Row className="title1 card-row">
-                      <Circle r={15} fill={{ color: "#000000" }} /> &nbsp;
-                      &nbsp;{this.state.black_disc} &nbsp;&nbsp;&nbsp;&nbsp;{" "}
-                      {this.state.black_player}
-                    </Row>
-                    <Row className="title1 card-row">
-                      <Circle r={15} fill={{ color: "#FFFFFF" }} /> &nbsp;
-                      &nbsp;{this.state.white_disc} &nbsp;&nbsp;&nbsp;&nbsp;{" "}
-                      {this.state.white_player}
-                    </Row>
-                  </CardText>
-                </Card>
-		  
-              </Row>
 
-		  <Row className="card-row">
-                <div>
-                
-                  <CardText>{over_modal}</CardText>
-                </div>
-              </Row>
-            </div>
-
-            <div className="col-md-auto justify-content-center gameboard">
-              {game_board}
-            </div>
-
-            <div className="col-3 offset-1">
+          <div className="col-3 ">
               <div className="row" id="chatRoomHeader">
                 Chat Room
               </div>
@@ -333,17 +292,75 @@ class Othello extends React.Component {
               </div>
               <div className="row">
                 <input type="text" className="col-md-10" id="inputMsg" onKeyUp={event => event.keyCode === 13 && this.start_chat(event) }/>
-                <Button className="col-md btn btn-primary"  onClick={this.start_chat}>
+                <button className="col-md btn btn-primary"  onClick={this.start_chat}>
                   Send
-                </Button>
+                </button>
               </div>
             </div>
+
+
+          {/**
+          gameboard
+           */}
+           {/* <div style = {{ position : fixed}}> */}
+           <div className="col-md-auto justify-content-center gameboard" >  
+              {game_board}
+            </div>
+           {/* </div> */}
+            
+
+
+
+
+            <div className="col-3 scoreboard">
+              <div>
+                <div
+                  style={{ backgroundcolor: "black"}}
+                >
+	    
+                  <div>{dark_player_status}</div>
+                </div>
+              </div>
+
+              {/**
+              blue score 
+              */}
+              <div>
+                <div body inverse style= {{ backgroundColor: "gold" }}>
+                  <div >Score</div>
+                  <div>
+                    <div>
+                      <Circle r={10} fill={{ color: "#000000" }} /> &nbsp;
+                      &nbsp;{this.state.black_disc} &nbsp;&nbsp;&nbsp;&nbsp;{" "}
+                      {this.state.black_player}
+                    </div>
+                    <div>
+                      <Circle r={10} fill={{ color: "#FFFFFF" }} /> &nbsp;
+                      &nbsp;{this.state.white_disc} &nbsp;&nbsp;&nbsp;&nbsp;{" "}
+                      {this.state.white_player}
+                    </div>
+                  </div>
+                </div>
+		  
+              </div>
+
+        {/**
+          Game status
+          */}
+		  <div>
+                <div>
+                
+                  <div>Status: {over_modal}</div>
+                </div>
+              </div>
+            </div>
+
+            
+
+            
           </div>
         </div>
-        {/*Attribute: https://www.npmjs.com/package/react-toastify*/}
-        <div>
-          <ToastContainer className="title1" />
-        </div>
+
       </div>
     );
   }

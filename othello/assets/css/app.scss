@@ -44,19 +44,7 @@ body
 }
 
 
-.close {
-  color: #aaaaaa;
-  font-size: 200%;
-  font-weight: bold;
-  margin-right: -100%;
-  margin-top: -4%;
-}
 
-.close:hover, .close:focus {
-  color: #000;
-  text-decoration: none;
-  cursor: pointer;
-}
 
 #username_input {
   padding-top: 5%;
@@ -255,17 +243,12 @@ a.animated-button:link, a.animated-button:visited {
   font-size: 30px;
 }
 
-.games-list
-{
-  color: white;
-  font-weight: bold;
-  text-align: center;
-}
+
 
 #chatRoomHeader {
-  background: #293239;
-	border-radius: 5px 5px 0 0;
-	color: #fff;
+  background: red;
+	border-radius: 10px 10px 0 0;
+	color: green;
 	cursor: pointer;
 	padding: 16px 24px;
 }

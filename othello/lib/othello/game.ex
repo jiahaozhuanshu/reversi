@@ -1,8 +1,8 @@
 defmodule Othello.Game do
   def new do
     %{
-      # creating a board as that similar to othello
-      game_board: othello(),
+      # creating a board as that similar to reversi
+      game_board: reversi(),
       # The player with the black disc
       black_player: nil,
       # The player with the black disc
@@ -34,90 +34,79 @@ defmodule Othello.Game do
       status: game.status
     }
 
-    disc_color = who_am_I?(game, game.player)
-    legal_moves = legal_moves_options(client_view.game_board, disc_color)
+    chess_color = 
+    cond do
+    game.black_player == game.player ->
+      1
+    game.white_player == game.player ->
+      2
+    Enum.member?(game.observers, game.player) ->
+      0
+    true ->
+      -1
+  end
+      
+    legal_moves = legal_moves_options(client_view.game_board, chess_color)
     Map.put(client_view, :legal_moves, legal_moves)
   end
 
-  # Attribution: https://boardgames.stackexchange.com/questions/20572/how-to-approach-a-game-of-othello-reversi-game
-  # Creating the othello board for use
-  # 2 when the disc is of white color
-  # 1 when the disc is of black color
-  # 0 when there are no disc in the board
 
-  defp othello() do
-    [
-      [0, 0, 0, 0, 0, 0, 0, 0],
-      [0, 0, 0, 0, 0, 0, 0, 0],
-      [0, 0, 0, 0, 0, 0, 0, 0],
-      [0, 0, 0, 1, 2, 0, 0, 0],
-      [0, 0, 0, 2, 1, 0, 0, 0],
-      [0, 0, 0, 0, 0, 0, 0, 0],
-      [0, 0, 0, 0, 0, 0, 0, 0],
-      [0, 0, 0, 0, 0, 0, 0, 0]
-    ]
-  end
 
-  # Add a new player as black_player and white_player, once both the users are
-  # added all other users will be added as observers.
+ # first user will be added as white player
+ # second user will be added as black player
+ # the following players will be added as observers
 
   def add_new_player(game, user_name) do
-    chats = game.chats
+      chats = game.chats
 
     cond do
       game.black_player == user_name or game.white_player == user_name or
           Enum.member?(game.observers, user_name) ->
         game
 
-        String.length(user_name) == 0 ->
-               game
-               |> Map.put(
-                 :chats,
-                 List.insert_at(chats, -1, [
-                   "system",
-                   "" <>
-                     user_name <> " joined the game as an observer and can only see the game in play."
-                 ])
-               )
-               |> Map.put(:observers, List.insert_at(game.observers, -1, user_name))
+        # String.length(user_name) == 0 ->
+        #        game
+        #        |> Map.put(
+        #          :chats,
+        #          List.insert_at(chats, -1, [
+        #            "system",
+        #            "" <>
+        #              user_name <> " joined the game as an observer and can only see the game in play."
+        #          ])
+        #        )
+        #        |> Map.put(:observers, List.insert_at(game.observers, -1, user_name))
 
 
-      game.black_player == nil or game.white_player == nil ->
-        if game.white_player == nil do
+      # game.black_player == nil or game.white_player == nil ->
+        game.white_player == nil ->
           game
-          |> Map.put(
-            :chats,
-            List.insert_at(chats, -1, [
-              "system",
-              "" <> user_name <> " joined the game and will be playing with the white discs."
-            ])
-          )
           |> Map.put(:white_player, user_name)
-        else
-          game
+
           |> Map.put(
             :chats,
-            List.insert_at(chats, -1, [
-              "system",
-              "" <> user_name <> " joined the game and will be playing with the black discs."
-            ])
+            List.insert_at(chats, -1, ["system","" <> user_name <> " joined as the white player."])
           )
+        
+        
+        game.black_player == nil ->
+          game
           |> Map.put(:black_player, user_name)
           |> Map.put(:player, user_name)
           |> Map.put(:status, "Playing")
-        end
+          |> Map.put(
+            :chats,
+            List.insert_at(chats, -1, ["system","" <> user_name <> " joined as the black player."
+            ])
+          )
+        
 
       true ->
         game
+        |> Map.put(:observers, List.insert_at(game.observers, -1, user_name))
         |> Map.put(
           :chats,
-          List.insert_at(chats, -1, [
-            "system",
-            "" <>
-              user_name <> " joined the game as an observer and can only see the game in play."
-          ])
+          List.insert_at(chats, -1, ["system","" <>user_name <> " joined as an observer."])
         )
-        |> Map.put(:observers, List.insert_at(game.observers, -1, user_name))
     end
   end
 
@@ -159,11 +148,10 @@ defmodule Othello.Game do
   end
 
 # Determining all the legal moves that are available for the given player
-def legal_moves_options(game_board, disc_color) do
-  size = Enum.count(game_board)
+def legal_moves_options(game_board, chess_color) do
 
-  Enum.reduce(Enum.to_list(0..(size * size - 1)), [], fn i, legal_moves ->
-    if is_legal_move?(game_board, i, disc_color) do
+  Enum.reduce(Enum.to_list(0..63), [], fn (i, legal_moves) ->
+    if legal_move(game_board, i, chess_color) do
       List.insert_at(legal_moves, -1, i)
     else
       legal_moves
@@ -174,20 +162,19 @@ end
 # Determining whether the move is legal or not that is when trying to click at
 # the cell where a move cannot be made
 
-defp is_legal_move?(game_board, i, disc_color) do
-  size = Enum.count(game_board)
-  row = div(i, size)
-  column = rem(i, size)
+defp legal_move(game_board, i, chess_color) do
+  row = div(i, 8)
+  column = rem(i, 8)
 
   if game_board
      |> Enum.at(row)
      |> Enum.at(column) != 0 do
     false
   else
-    possible_moves = [[0, 1], [1, 0], [-1, 0], [0, -1], [1, -1], [-1, 1], [1, 1], [-1, -1]]
+    potential_directions = [[0, 1], [1, 0], [-1, 0], [0, -1], [1, -1], [-1, 1], [1, 1], [-1, -1]]
 
-    Enum.any?(possible_moves, fn possible_move ->
-      is_legal_move?(game_board, size, row, column, possible_move, disc_color)
+    Enum.any?(potential_directions, fn (possible_move) ->
+      is_direction_legal(game_board, 8, row, column, possible_move, chess_color)
     end)
   end
 end
@@ -195,33 +182,39 @@ end
 # Determining whether the move is legal or not that is when trying to click at
 # the cell where a move cannot be made
 
-defp is_legal_move?(game_board, size, row, column, possible_move, disc_color) do
-  row_depth1 = row + List.first(possible_move)
-  column_depth1 = column + List.last(possible_move)
+defp is_direction_legal(game_board, size, row, column, possible_move, chess_color) do
+  # cur_row = row + List.first(possible_move)
+  cur_row = row + Enum.at(possible_move, 0)
+  cur_col = column + Enum.at(possible_move, 1)
 
   cond do
-    row_depth1 < 0 or row_depth1 >= size or column_depth1 < 0 or column_depth1 >= size ->
-      false
+    # if the current move is out of the board
+    cur_row < 0 or cur_row >= size or cur_col < 0 or cur_col >= size ->
+    false
 
-    game_board |> Enum.at(row_depth1) |> Enum.at(column_depth1) == 0 or
-        game_board |> Enum.at(row_depth1) |> Enum.at(column_depth1) == disc_color ->
-      false
+    #if there is no chess pieces around the the clicked point
+    game_board |> Enum.at(cur_row) |> Enum.at(cur_col) == 0 ->
+    false
+
+    #if 
+    game_board |> Enum.at(cur_row) |> Enum.at(cur_col) == chess_color ->
+    false
 
     true ->
-      row_depth2 = row_depth1 + List.first(possible_move)
-      column_depth2 = column_depth1 + List.last(possible_move)
-      same_disc?(game_board, size, row_depth2, column_depth2, possible_move, disc_color)
+      next_row = cur_row + List.first(possible_move)
+      next_col = cur_col + List.last(possible_move)
+      is_same_color(game_board, size, next_row, next_col, possible_move, chess_color)
   end
 end
 
 # To determine whether the color for the disc is same or not depending upon the
 #  possible moves.
-defp same_disc?(game_board, size, row, column, possible_move, disc_color) do
+defp is_same_color(game_board, size, row, column, possible_move, chess_color) do
   cond do
     row < 0 or row >= size or column < 0 or column >= size ->
       false
 
-    game_board |> Enum.at(row) |> Enum.at(column) == disc_color ->
+    game_board |> Enum.at(row) |> Enum.at(column) == chess_color ->
       true
 
     game_board |> Enum.at(row) |> Enum.at(column) == 0 ->
@@ -230,90 +223,47 @@ defp same_disc?(game_board, size, row, column, possible_move, disc_color) do
     true ->
       column_depth1 = column + List.last(possible_move)
       row_depth1 = row + List.first(possible_move)
-      same_disc?(game_board, size, row_depth1, column_depth1, possible_move, disc_color)
+      is_same_color(game_board, size, row_depth1, column_depth1, possible_move, chess_color)
   end
 end
 
-# Counting the number of black and white discs, so as to update the score to
-# decide the winner.
-defp update_score(game, cell_num) do
+# update the number of chess pieces for  players
+defp update_score(game, player_color) do
   game.game_board
   |> Enum.concat()
-  |> Enum.reduce(0, fn x, accumulator ->
-    if x == cell_num, do: accumulator + 1, else: accumulator
+  |> Enum.reduce(0, fn x, acc ->
+    if x == player_color, do: acc + 1, else: acc
   end)
 end
 
-# Determining the player assigned to the username based on the following values:
-# 1 : is for the black_player
-# 2 : is for the white_player
-# -1 : is for others
 
-defp who_am_I?(game, user_name) do
-  cond do
-    game.black_player == user_name ->
-      1
-
-    game.white_player == user_name ->
-      2
-
-    Enum.member?(game.observers, user_name) ->
-      0
-
-    true ->
-      -1
-  end
-end
-
-# Making a move that is when the user clicks on any empty space, he will be making
-# a move so as to make all others in the line if a legal move.
-def move(game, disc_color, row, column) do
-  size = Enum.count(game.game_board)
-  possible_moves = [[0, 1], [1, 0], [-1, 0], [0, -1], [1, -1], [-1, 1], [1, 1], [-1, -1]]
+# make a move and flip chess pieces if the move is legal
+def move(game, chess_color, row, column) do
+  potential_directions = [[0, 1], [1, 0], [-1, 0], [0, -1], [1, -1], [-1, 1], [1, 1], [-1, -1]]
 
   game =
-    Enum.reduce(possible_moves, game, fn possible_move, game ->
-      if is_legal_move?(game.game_board, size, row, column, possible_move, disc_color) do
+    Enum.reduce(potential_directions, game, fn possible_move, game ->
+      if is_direction_legal(game.game_board, 8, row, column, possible_move, chess_color) do
         user_name =
-          if disc_color == 1 do
+          if chess_color == 1 do
             game.black_player
           else
             game.white_player
           end
 
-        row_depth1 = row + List.first(possible_move)
-        column_depth1 = column + List.last(possible_move)
-
-        new_game_board =
-          change_disc_count(
-            game.game_board,
-            row_depth1,
-            column_depth1,
-            possible_move,
-            disc_color
-          )
+        next_row = row + Enum.at(possible_move, 0)
+        next_col = column + Enum.at(possible_move, 1)
+        new_game_board = flip_tiles(game.game_board, next_row, next_col, possible_move, chess_color)
 
         game
-        |> Map.put(
-          :chats,
-          List.insert_at(game.chats, -1, [
-            "system",
-            "" <> user_name <> " has moved a disc."
-          ])
-        )
         |> Map.put(:game_board, new_game_board)
       else
         game
       end
     end)
 
-  new_game_board =
-    List.replace_at(
-      game.game_board,
-      row,
-      List.replace_at(Enum.at(game.game_board, row), column, disc_color)
-    )
-
+  # change the clicked tile to the color of the current user
+  new_game_board = List.replace_at(game.game_board, row,List.replace_at(Enum.at(game.game_board, row), column, chess_color))
   game = Map.put(game, :game_board, new_game_board)
   game = change_player(game)
 
@@ -322,23 +272,38 @@ def move(game, disc_color, row, column) do
   |> Map.put(:black_disc, update_score(game, 1))
 end
 
-# changing the count of the discs of both black and white after every move
-defp change_disc_count(game_board, row, column, possible_move, disc_color) do
+# flip chess pieces after every move
+defp flip_tiles(game_board, row, column, possible_move, chess_color) do
   cond do
-    game_board |> Enum.at(row) |> Enum.at(column) == disc_color ->
+    # if the color of current pieces is  the same as current user, then return 
+    game_board |> Enum.at(row) |> Enum.at(column) == chess_color ->
       game_board
 
+    # if the color of the current pieces is the opposite one, then flip the chess pieces
+    # and continue toward the original direction
     true ->
-      new_game_board =
-        List.replace_at(
-          game_board,
-          row,
-          List.replace_at(Enum.at(game_board, row), column, disc_color)
-        )
-
-      row_depth1 = row + List.first(possible_move)
-      column_depth1 = column + List.last(possible_move)
-      change_disc_count(new_game_board, row_depth1, column_depth1, possible_move, disc_color)
+      new_game_board =List.replace_at(game_board, row,List.replace_at(Enum.at(game_board, row), column, chess_color))
+      next_row = row + Enum.at(possible_move, 0)
+      next_col = column + Enum.at(possible_move, 1)
+      flip_tiles(new_game_board, next_row, next_col, possible_move, chess_color)
   end
 end
+
+  # Creating the reversi board for use
+  # 2: white color
+  # 1: black color
+  # 0: empty
+
+  defp reversi() do
+    [
+      [0, 0, 0, 0, 0, 0, 0, 0],
+      [0, 0, 0, 0, 0, 0, 0, 0],
+      [0, 0, 0, 0, 0, 0, 0, 0],
+      [0, 0, 0, 1, 2, 0, 0, 0],
+      [0, 0, 0, 2, 1, 0, 0, 0],
+      [0, 0, 0, 0, 0, 0, 0, 0],
+      [0, 0, 0, 0, 0, 0, 0, 0],
+      [0, 0, 0, 0, 0, 0, 0, 0]
+    ]
+  end
 end

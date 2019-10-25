@@ -65964,7 +65964,7 @@ var Othello = function (_React$Component) {
         for (var j = 0; j < 8; j++) {
           cols.push(_react2.default.createElement(
             "div",
-            { className: "col", key: "0" + j },
+            { className: "col no-gutters", key: "0" + j },
             " ",
             this.render_disc(i - 1, j),
             " "
@@ -66021,30 +66021,27 @@ var Othello = function (_React$Component) {
     value: function render_game_over(over) {
       if (over) {
         if (this.state.black_disc > this.state.white_disc) {
-          this.win_info("Player " + this.state.black_player + " wins the match!");
-          console.log("Call #1");
+
           return _react2.default.createElement(
             "div",
-            { id: "congrats", className: "infoboard" },
+            null,
             "Game Over!",
             _react2.default.createElement("br", null),
             this.state.black_player,
             " wins!"
           );
         } else if (this.state.white_disc > this.state.black_disc) {
-          this.win_info("Player " + this.state.white_player + " wins the match!");
-          console.log("Call #2");
+
           return _react2.default.createElement(
             "div",
-            { id: "congrats" },
+            null,
             "Game Over!",
             _react2.default.createElement("br", null),
             this.state.white_player,
             " wins!"
           );
         } else {
-          this.win_info("It's a Draw!");
-          console.log("Call #3");
+
           return _react2.default.createElement(
             "div",
             { id: "congrats" },
@@ -66092,7 +66089,7 @@ var Othello = function (_React$Component) {
 
         mainChat.push(_react2.default.createElement(
           "div",
-          { className: "row chattingMsg " + chatTypeClass, key: "msg" + i },
+          { className: "row" + chatTypeClass, key: "msg" + i },
           " ",
           chatInfo,
           " ",
@@ -66148,81 +66145,7 @@ var Othello = function (_React$Component) {
             { className: "row" },
             _react2.default.createElement(
               "div",
-              { className: "col-3 scoreboard" },
-              _react2.default.createElement(
-                "div",
-                { className: "card-row" },
-                _react2.default.createElement(
-                  "div",
-                  {
-                    style: { backgroundcolor: "black" }
-                  },
-                  _react2.default.createElement(
-                    "div",
-                    null,
-                    dark_player_status
-                  )
-                )
-              ),
-              _react2.default.createElement(
-                _reactstrap.Row,
-                { className: "card-row" },
-                _react2.default.createElement(
-                  _reactstrap.Card,
-                  { body: true, inverse: true, style: { backgroundColor: "blue" } },
-                  _react2.default.createElement(
-                    _reactstrap.CardTitle,
-                    { className: "title1" },
-                    "Score"
-                  ),
-                  _react2.default.createElement(
-                    _reactstrap.CardText,
-                    null,
-                    _react2.default.createElement(
-                      _reactstrap.Row,
-                      { className: "title1 card-row" },
-                      _react2.default.createElement(_reactShapes.Circle, { r: 15, fill: { color: "#000000" } }),
-                      " \xA0 \xA0",
-                      this.state.black_disc,
-                      " \xA0\xA0\xA0\xA0",
-                      " ",
-                      this.state.black_player
-                    ),
-                    _react2.default.createElement(
-                      _reactstrap.Row,
-                      { className: "title1 card-row" },
-                      _react2.default.createElement(_reactShapes.Circle, { r: 15, fill: { color: "#FFFFFF" } }),
-                      " \xA0 \xA0",
-                      this.state.white_disc,
-                      " \xA0\xA0\xA0\xA0",
-                      " ",
-                      this.state.white_player
-                    )
-                  )
-                )
-              ),
-              _react2.default.createElement(
-                _reactstrap.Row,
-                { className: "card-row" },
-                _react2.default.createElement(
-                  "div",
-                  null,
-                  _react2.default.createElement(
-                    _reactstrap.CardText,
-                    null,
-                    over_modal
-                  )
-                )
-              )
-            ),
-            _react2.default.createElement(
-              "div",
-              { className: "col-md-auto justify-content-center gameboard" },
-              game_board
-            ),
-            _react2.default.createElement(
-              "div",
-              { className: "col-3 offset-1" },
+              { className: "col-3 " },
               _react2.default.createElement(
                 "div",
                 { className: "row", id: "chatRoomHeader" },
@@ -66244,18 +66167,88 @@ var Othello = function (_React$Component) {
                     return event.keyCode === 13 && _this3.start_chat(event);
                   } }),
                 _react2.default.createElement(
-                  _reactstrap.Button,
+                  "button",
                   { className: "col-md btn btn-primary", onClick: this.start_chat },
                   "Send"
                 )
               )
+            ),
+            _react2.default.createElement(
+              "div",
+              { className: "col-md-auto justify-content-center gameboard" },
+              game_board
+            ),
+            _react2.default.createElement(
+              "div",
+              { className: "col-3 scoreboard" },
+              _react2.default.createElement(
+                "div",
+                null,
+                _react2.default.createElement(
+                  "div",
+                  {
+                    style: { backgroundcolor: "black" }
+                  },
+                  _react2.default.createElement(
+                    "div",
+                    null,
+                    dark_player_status
+                  )
+                )
+              ),
+              _react2.default.createElement(
+                "div",
+                null,
+                _react2.default.createElement(
+                  "div",
+                  { body: true, inverse: true, style: { backgroundColor: "gold" } },
+                  _react2.default.createElement(
+                    "div",
+                    null,
+                    "Score"
+                  ),
+                  _react2.default.createElement(
+                    "div",
+                    null,
+                    _react2.default.createElement(
+                      "div",
+                      null,
+                      _react2.default.createElement(_reactShapes.Circle, { r: 10, fill: { color: "#000000" } }),
+                      " \xA0 \xA0",
+                      this.state.black_disc,
+                      " \xA0\xA0\xA0\xA0",
+                      " ",
+                      this.state.black_player
+                    ),
+                    _react2.default.createElement(
+                      "div",
+                      null,
+                      _react2.default.createElement(_reactShapes.Circle, { r: 10, fill: { color: "#FFFFFF" } }),
+                      " \xA0 \xA0",
+                      this.state.white_disc,
+                      " \xA0\xA0\xA0\xA0",
+                      " ",
+                      this.state.white_player
+                    )
+                  )
+                )
+              ),
+              _react2.default.createElement(
+                "div",
+                null,
+                _react2.default.createElement(
+                  "div",
+                  null,
+                  _react2.default.createElement(
+                    "div",
+                    null,
+                    "Status: ",
+                    over_modal
+                  )
+                )
+              )
             )
           )
-        ),
-        _react2.default.createElement(
-          "div",
-          null,
-          _react2.default.createElement(_reactToastify.ToastContainer, { className: "title1" })
         )
       );
     }

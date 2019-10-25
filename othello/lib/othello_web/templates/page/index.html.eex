@@ -1,3 +1,67 @@
+
+
+<div class="Container">
+  <div class="row justify-content-center">
+    <h1>Welcome to the Reversi Game</h1>
+  </div>
+  <div>
+  <div>
+    <div>
+        <div>
+         
+          <p>Click below to create or join a reversi game!</p>
+        </div>
+        <ul class="list-group list-group-flush">
+          <li class="list-group-item"> <a id="new_game" href="#" >New Game</a> </li>
+          <li class="list-group-item"><a id="new_game2" href="#" >Join Game</a> </li>
+          <%# <li class="list-group-item"><a id="new_game3" href="#" >Spectate Game</a> </li> %>
+        </ul>
+      </div>
+    </div>
+
+</div>
+
+<div id="myModal" class="modal" role="dialog">
+  <div class="modal-dialog modal-dialog-centered">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h4 class="modal-title"><b>Create or Join a game</b></h4>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+         
+        </button>
+      </div>
+      <div class="modal-body">
+        <div>
+        <div>
+          Battle field name:
+        </div>
+        <div>
+          <input id="game_name" type="text"/>
+        </div>
+      </div>
+      <div><br></div>
+      <div>
+        <div>
+          Username:
+        </div>
+        <div>
+          <input id="user_name" type="text"/>
+        </div>
+      </div>
+      <div>
+        <span><b>Warning:</b> <i>You will automatcally become an observer if two players already in the battle.</i></span>
+      </div>
+      </div>
+      <div class="modal-footer">
+      <button type="button" class="btn btn-default" data-dismiss="modal" onClick="joinGame()">Join Battle</button>
+        
+      </div>
+    </div>
+  </div>
+</div>
+
+
+
 <script>
 
       function joinGame() {
@@ -17,78 +81,12 @@
         window.location.href = game_link;
       }
     </script>
-
-<div class="Container">
-  <div class="row justify-content-center">
-    <h1 class="index-head p-3">Welcome to the <u>Reversi Game</u></h1>
-  </div>
-  <div class="row">
-  <div class="col">
-    <div>
-        <div>
-          <h5></h5>
-          <p>Click below to create or join a reversi game!</p>
-        </div>
-        <ul class="list-group list-group-flush">
-          <li class="list-group-item"> <a id="new_game" href="#" >New Game</a> </li>
-          <li class="list-group-item"><a id="new_game2" href="#" >Join Game</a> </li>
-          <li class="list-group-item"><a id="new_game3" href="#" >Spectate Game</a> </li>
-        </ul>
-      </div>
-    </div>
-    <div class="col-md p-3 offset-md-1">
-      <div class="row games-list p-3 justify-content-left">
-<!--        <marquee direction="down"><h2>List of Games!</h2> </marquee>
--->      
-</div>
-  </div>
-</div>
-
-<div id="myModal" class="modal" tabindex="-1" role="dialog">
-  <div class="modal-dialog modal-dialog-centered" role="document">
-    <div class="modal-content">
-      <div class="modal-header">
-        <h4 class="modal-title"><b>Create or Join a game</b></h4>
-        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-          <span aria-hidden="true">&times;</span>
-        </button>
-      </div>
-      <div class="modal-body">
-        <div class="row justify-content-center">
-        <div class="col-sm">
-          Battle field name:
-        </div>
-        <div class="col-sm ">
-          <input id="game_name" type="text"/>
-        </div>
-      </div>
-      <div class="row"><br></div>
-      <div class="row">
-        <div class="col">
-          Username:
-        </div>
-        <div class="col">
-          <input id="user_name" type="text"/>
-        </div>
-      </div>
-      <div class="row p-3">
-        <span><b>Warning:</b> <i>You will automatcally become an observer if two players already in the battle.</i></span>
-      </div>
-      </div>
-      <div class="modal-footer">
-        <input id="player_btn" class="btn btn-primary" type="button" onClick="joinGame()" value="Join battle">
-      </div>
-    </div>
-  </div>
-</div>
-
-
     <!-- https://www.w3schools.com/howto/howto_css_modals.asp -->
     <script>
     var modal = document.getElementById('myModal');
     var btn = document.getElementById("new_game");
     var btn2 = document.getElementById("new_game2");
-    var btn3 = document.getElementById("new_game3");
+    {/*var btn3 = document.getElementById("new_game3");*/}
     var span = document.getElementsByClassName("close")[0];
 
     btn.onclick = function() {
