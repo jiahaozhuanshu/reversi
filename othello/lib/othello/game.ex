@@ -1,17 +1,24 @@
 defmodule Othello.Game do
   def new do
     %{
+      # creating a board as that similar to reversi
       game_board: reversi(),
+      # The player with the black disc
       black_player: nil,
+      # The player with the black disc
       white_player: nil,
+      # The player whose turn is to make a move
       player: nil,
+      # List of all the available observers for the game
       observers: [],
+      # List of chats thta have been generated
       chats: [],
+      # status of the game such as waiting, finish and playing
       status: "Waiting"
     }
   end
 
-  # Initializing the game_board for the client view
+  # Initializing the game_board fo the client view
   def client_view(game) do
     client_view = %{
       game_board: game.game_board,
@@ -20,9 +27,9 @@ defmodule Othello.Game do
       observers: game.observers,
       chats: game.chats,
       player: game.player,
-   
+      # the number of black discs in play
       black_disc: update_score(game, 1),
-
+      # the number of white discs in play
       white_disc: update_score(game, 2),
       status: game.status
     }
@@ -39,7 +46,7 @@ defmodule Othello.Game do
       -1
   end
       
-    legal_moves = all_legal_moves(client_view.game_board, chess_color)
+    legal_moves = legal_moves_options(client_view.game_board, chess_color)
     Map.put(client_view, :legal_moves, legal_moves)
   end
 
@@ -103,7 +110,8 @@ defmodule Othello.Game do
     end
   end
 
-  
+  # Changing the player fatre every move and if there are no moves left then
+  # updating the game status as finsihed.
   def change_player(game) do
     game =
       if game.player == game.white_player do
@@ -139,8 +147,8 @@ defmodule Othello.Game do
     end
   end
 
-
-def all_legal_moves(game_board, chess_color) do
+# Determining all the legal moves that are available for the given player
+def legal_moves_options(game_board, chess_color) do
 
   Enum.reduce(Enum.to_list(0..63), [], fn (i, legal_moves) ->
     if legal_move(game_board, i, chess_color) do
@@ -165,8 +173,8 @@ defp legal_move(game_board, i, chess_color) do
   else
     potential_directions = [[0, 1], [1, 0], [-1, 0], [0, -1], [1, -1], [-1, 1], [1, 1], [-1, -1]]
 
-    Enum.any?(potential_directions, fn (potential_direction) ->
-      is_direction_legal(game_board, 8, row, column, potential_direction, chess_color)
+    Enum.any?(potential_directions, fn (possible_move) ->
+      is_direction_legal(game_board, 8, row, column, possible_move, chess_color)
     end)
   end
 end
@@ -174,10 +182,10 @@ end
 # Determining whether the move is legal or not that is when trying to click at
 # the cell where a move cannot be made
 
-defp is_direction_legal(game_board, size, row, column, potential_direction, chess_color) do
- 
-  cur_row = row + Enum.at(potential_direction, 0)
-  cur_col = column + Enum.at(potential_direction, 1)
+defp is_direction_legal(game_board, size, row, column, possible_move, chess_color) do
+  # cur_row = row + List.first(possible_move)
+  cur_row = row + Enum.at(possible_move, 0)
+  cur_col = column + Enum.at(possible_move, 1)
 
   cond do
     # if the current move is out of the board
@@ -193,14 +201,15 @@ defp is_direction_legal(game_board, size, row, column, potential_direction, ches
     false
 
     true ->
-      next_row = cur_row + Enum.at(potential_direction, 0)
-      next_col = cur_col + Enum.at(potential_direction,1)
-      is_same_color(game_board, size, next_row, next_col, potential_direction, chess_color)
+      next_row = cur_row + List.first(possible_move)
+      next_col = cur_col + List.last(possible_move)
+      is_same_color(game_board, size, next_row, next_col, possible_move, chess_color)
   end
 end
 
-
-defp is_same_color(game_board, size, row, column, potential_direction, chess_color) do
+# To determine whether the color for the disc is same or not depending upon the
+#  possible moves.
+defp is_same_color(game_board, size, row, column, possible_move, chess_color) do
   cond do
     row < 0 or row >= size or column < 0 or column >= size ->
       false
@@ -212,9 +221,9 @@ defp is_same_color(game_board, size, row, column, potential_direction, chess_col
       false
 
     true ->
-      next_col = column + Enum.at(potential_direction, 1)
-      next_row = row + Enum.at(potential_direction, 0)
-      is_same_color(game_board, size, next_row, next_col, potential_direction, chess_color)
+      column_depth1 = column + List.last(possible_move)
+      row_depth1 = row + List.first(possible_move)
+      is_same_color(game_board, size, row_depth1, column_depth1, possible_move, chess_color)
   end
 end
 
@@ -233,8 +242,8 @@ def move(game, chess_color, row, column) do
   potential_directions = [[0, 1], [1, 0], [-1, 0], [0, -1], [1, -1], [-1, 1], [1, 1], [-1, -1]]
 
   game =
-    Enum.reduce(potential_directions, game, fn potential_direction, game ->
-      if is_direction_legal(game.game_board, 8, row, column, potential_direction, chess_color) do
+    Enum.reduce(potential_directions, game, fn possible_move, game ->
+      if is_direction_legal(game.game_board, 8, row, column, possible_move, chess_color) do
         user_name =
           if chess_color == 1 do
             game.black_player
@@ -242,9 +251,9 @@ def move(game, chess_color, row, column) do
             game.white_player
           end
 
-        next_row = row + Enum.at(potential_direction, 0)
-        next_col = column + Enum.at(potential_direction, 1)
-        new_game_board = flip_tiles(game.game_board, next_row, next_col, potential_direction, chess_color)
+        next_row = row + Enum.at(possible_move, 0)
+        next_col = column + Enum.at(possible_move, 1)
+        new_game_board = flip_tiles(game.game_board, next_row, next_col, possible_move, chess_color)
 
         game
         |> Map.put(:game_board, new_game_board)
@@ -264,7 +273,7 @@ def move(game, chess_color, row, column) do
 end
 
 # flip chess pieces after every move
-defp flip_tiles(game_board, row, column, potential_direction, chess_color) do
+defp flip_tiles(game_board, row, column, possible_move, chess_color) do
   cond do
     # if the color of current pieces is  the same as current user, then return 
     game_board |> Enum.at(row) |> Enum.at(column) == chess_color ->
@@ -274,9 +283,9 @@ defp flip_tiles(game_board, row, column, potential_direction, chess_color) do
     # and continue toward the original direction
     true ->
       new_game_board =List.replace_at(game_board, row,List.replace_at(Enum.at(game_board, row), column, chess_color))
-      next_row = row + Enum.at(potential_direction, 0)
-      next_col = column + Enum.at(potential_direction, 1)
-      flip_tiles(new_game_board, next_row, next_col, potential_direction, chess_color)
+      next_row = row + Enum.at(possible_move, 0)
+      next_col = column + Enum.at(possible_move, 1)
+      flip_tiles(new_game_board, next_row, next_col, possible_move, chess_color)
   end
 end
 
