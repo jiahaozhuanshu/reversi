@@ -56,12 +56,7 @@ class Othello extends React.Component {
   }
  
 
-  win_info(info)
-  {
-      toast(info, {
-          position: toast.POSITION.TOP_CENTER
-      });
-  }
+  
 
 
 /**display a single tile to the board*/	
@@ -193,8 +188,8 @@ class Othello extends React.Component {
 
     for (let i = 0; i < chats.length; i++) {
       let curChat = chats[i];
-      let chatType = firstChat[0];
-      let chatInfo = firstChat[1];
+      let chatType = curChat[0];
+      let chatInfo = curChat[1];
       let chatTypeClass = "";
       if (chatType == "system") {
         chatTypeClass = "systemMsg";
@@ -204,7 +199,7 @@ class Othello extends React.Component {
         chatTypeClass = "observerMsg";
       }
 
-      mainChat.push(
+      chatHistory.push(
         <div className={"row" + chatTypeClass} key={"msg" + i}>
           {" "}
           {chatInfo} <br />
@@ -213,44 +208,39 @@ class Othello extends React.Component {
     }
 
     let game_board = this.render_othello();
-    let dark_player_status = "";
-    let light_player_status = "";
+    let player_status = "";
     let over = false;
 
     if (this.state.white_disc + this.state.black_disc == 64) {
       over = true;
-      console.log("Game over here #1");
+      
     }
 
     if (this.state.black_player == "" || this.state.white_player == "") {
-      dark_player_status = "Wait...";
-      light_player_status = "Wait...";
-      console.log("Here");
+      player_status = "Waiting for another player";
+      
     }
     else if (this.state.legal_moves.length == 0 || this.state.legal_moves.length == null)
     {
         over = true;
-        console.log("I was here");
+      
     }
 
     else if (this.state.player == this.state.black_player)
     {
-      dark_player_status = "Black player's turn!";
+      player_status = "Black player's turn!";
       if (this.state.black_disc == 0 || this.state.black_disc == null)
       {
         over = true;
-        console.log("Game over here #2");
         this.win_info("No more turn left! Game Over!");
       }
     }
     else
     {
-      dark_player_status = "White player's turn!";
+      player_status = "White player's turn!";
 
       if (this.state.white_disc == 0 || this.state.white_disc == null) {
         over = true;
-        console.log("Dark Pieces: " + this.state.black_disc);
-        console.log("Game over here #3");
         this.win_info("No more turn left! Game Over!");
       }
     }
@@ -267,7 +257,7 @@ class Othello extends React.Component {
                 Chat Room
               </div>
               <div className="row" id="chatRoomBody">
-                <div className="container game-container">{mainChat}</div>
+                <div className="container game-container">{chatHistory}</div>
               </div>
               <div className="row">
                 <input type="text" className="col-md-10" id="inputMsg" onKeyUp={event => event.keyCode === 13 && this.start_chat(event) }/>
@@ -297,7 +287,7 @@ class Othello extends React.Component {
                   style={{ backgroundcolor: "black"}}
                 >
 	    
-                  <div>{dark_player_status}</div>
+                  <div>{player_status}</div>
                 </div>
               </div>
 
