@@ -1,13 +1,13 @@
 import React from "react";
 import ReactDOM from "react-dom";
+import { Button, Row, Card, CardTitle, CardText } from "reactstrap";
 import { Circle } from "react-shapes";
 
-
-export default function run_othello(root, channel) {
-  ReactDOM.render(<Othello channel={channel} />, root);
+export default function init_game(root, channel) {
+  ReactDOM.render(<Reversi channel={channel} />, root);
 }
 
-class Othello extends React.Component {
+class Reversi extends React.Component {
   constructor(props) {
     super(props);
     this.channel = props.channel;
@@ -22,7 +22,7 @@ class Othello extends React.Component {
       black_disc: 0, 
       white_disc: 0, 
       legal_moves: [], 
-      game_status: "Waiting" 
+      game_status: "Waiting"
     };
 
     this.channel.on("move", payload => {
@@ -34,6 +34,7 @@ class Othello extends React.Component {
       .join()
       .receive("ok", this.got_view.bind(this))
       .receive("error", resp => {
+        console.log("Unable to join", resp);
       });
     this.make_move = this.make_move.bind(this);
     this.start_chat = this.start_chat.bind(this);
@@ -56,22 +57,18 @@ class Othello extends React.Component {
   }
  
 
-  win_info(info)
-  {
-      toast(info, {
-          position: toast.POSITION.TOP_CENTER
-      });
-  }
+  
 
-
-/**display a single tile to the board*/	
+  /**
+     let's begin by rendering only a single disc for the board
+     */
   render_disc(row, col) {
     let disk = "";
     if (this.state.game_board.length != 0) {
       let diskState = this.state.game_board[row][col];
       if (diskState == 0) {
         disk = (
-          <button
+          <Button
             className="enabled-disk"
             onClick={() => this.make_move(row, col)}
           />
@@ -94,9 +91,8 @@ class Othello extends React.Component {
     return disk;
   }
 
-
-/** return reversi board*/	
-  render_othello() {
+  
+  render_reversi() {
     let rows = [];
     for (let i = 1; i <= 8; i++) {
       let cols = [];
@@ -121,12 +117,21 @@ class Othello extends React.Component {
     return rows;
   }
 
+  /**
+   * Player moves the discs on the game board
+   */
   make_move(row, col) {
     let user_name = this.channel.params.user_name;
 
     if (this.state.player != user_name) return;
 
+    let size = this.state.game_board.length;
+    let index = row * size + col;
 
+   if (!this.state.legal_moves.includes(index)) {
+     
+      return;
+    } 
 
     let identity = -1;
 
@@ -141,6 +146,7 @@ class Othello extends React.Component {
     });
   }
 
+  /** Check if the game is over or not and rende the message if game over*/
   render_game_over(over) {
     if (over) {
       if (this.state.black_disc > this.state.white_disc) {
@@ -170,7 +176,7 @@ class Othello extends React.Component {
               <div>
                   Game Over!
                   <br />
-                  It is a draw!
+                  No winners! It is a draw!
               </div>
           );
       }
@@ -193,8 +199,8 @@ class Othello extends React.Component {
 
     for (let i = 0; i < chats.length; i++) {
       let curChat = chats[i];
-      let chatType = firstChat[0];
-      let chatInfo = firstChat[1];
+      let chatType = curChat[0];
+      let chatInfo = curChat[1];
       let chatTypeClass = "";
       if (chatType == "system") {
         chatTypeClass = "systemMsg";
@@ -204,7 +210,7 @@ class Othello extends React.Component {
         chatTypeClass = "observerMsg";
       }
 
-      mainChat.push(
+      chatHistory.push(
         <div className={"row" + chatTypeClass} key={"msg" + i}>
           {" "}
           {chatInfo} <br />
@@ -212,25 +218,20 @@ class Othello extends React.Component {
       );
     }
 
-    let game_board = this.render_othello();
+    let game_board = this.render_reversi();
     let dark_player_status = "";
-    let light_player_status = "";
     let over = false;
 
     if (this.state.white_disc + this.state.black_disc == 64) {
       over = true;
-      console.log("Game over here #1");
     }
 
     if (this.state.black_player == "" || this.state.white_player == "") {
       dark_player_status = "Wait...";
-      light_player_status = "Wait...";
-      console.log("Here");
     }
     else if (this.state.legal_moves.length == 0 || this.state.legal_moves.length == null)
     {
         over = true;
-        console.log("I was here");
     }
 
     else if (this.state.player == this.state.black_player)
@@ -239,8 +240,7 @@ class Othello extends React.Component {
       if (this.state.black_disc == 0 || this.state.black_disc == null)
       {
         over = true;
-        console.log("Game over here #2");
-        this.win_info("No more turn left! Game Over!");
+        
       }
     }
     else
@@ -249,9 +249,7 @@ class Othello extends React.Component {
 
       if (this.state.white_disc == 0 || this.state.white_disc == null) {
         over = true;
-        console.log("Dark Pieces: " + this.state.black_disc);
-        console.log("Game over here #3");
-        this.win_info("No more turn left! Game Over!");
+        
       }
     }
 
@@ -267,7 +265,7 @@ class Othello extends React.Component {
                 Chat Room
               </div>
               <div className="row" id="chatRoomBody">
-                <div className="container game-container">{mainChat}</div>
+                <div className="container game-container">{chatHistory}</div>
               </div>
               <div className="row">
                 <input type="text" className="col-md-10" id="inputMsg" onKeyUp={event => event.keyCode === 13 && this.start_chat(event) }/>
@@ -305,7 +303,7 @@ class Othello extends React.Component {
               blue score 
               */}
               <div>
-                <div body inverse style= {{ backgroundColor: "gold" }}>
+                <div style= {{ backgroundColor: "gold" }}>
                   <div >Score</div>
                   <div>
                     <div>

@@ -20,13 +20,13 @@ import "phoenix_html"
 
 // import socket from "./socket"
 import socket from "./socket"
-import run_othello from "./othello"
+import init_game from "./reversi"
 
 function start() {
   let root = document.getElementById('root');
   if (root) {
     let channel = socket.channel("games:" + window.game_name, {"user_name": window.user_name});
-    run_othello(root, channel);
+    init_game(root, channel);
   }
 }
 
